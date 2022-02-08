@@ -10,7 +10,7 @@ export class Ingredient {
   medication: Medication;
 
   @PrimaryColumn()
-  ingredient: string;
+  name: string;
 
   @Column({ nullable: true })
   numeratorQuantity: number;

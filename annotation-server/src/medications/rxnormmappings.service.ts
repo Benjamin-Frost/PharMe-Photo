@@ -57,6 +57,9 @@ export class RxNormMappingsService {
             rxNormMappings.length,
             'medications to database...',
           );
+
+          await this.rxNormMappingRepository.clear();
+
           const savedMedications = await this.rxNormMappingRepository
             .save<RxNormMapping>(rxNormMappings, { chunk: 50 })
             .catch((error) => {

@@ -12,5 +12,6 @@ import { RxNormMappingsService } from './rxnormmappings.service';
   imports: [TypeOrmModule.forFeature([RxNormMapping, Medication, Ingredient])],
   controllers: [MedicationsController, RxNormMappingsController],
   providers: [MedicationsService, RxNormMappingsService],
+  exports: [MedicationsService],
 })
 export class MedicationsModule {}

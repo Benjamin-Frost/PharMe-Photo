@@ -6,7 +6,7 @@ import { RxNormMapping } from './rxnormmappings.entity';
 @Entity()
 export class Medication {
   @PrimaryGeneratedColumn()
-  id: string;
+  id: number;
 
   @Column()
   name: string;

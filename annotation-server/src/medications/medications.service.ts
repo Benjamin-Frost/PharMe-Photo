@@ -22,10 +22,16 @@ export class MedicationsService {
     private ingredientRepository: Repository<Ingredient>,
   ) {}
 
-  async findOne(id: string): Promise<Medication> {
+  async findOne(id: number): Promise<Medication> {
+    return this.medicationRepository.findOne(id, {
+      relations: ['ingredients'],
+    });
+  }
+
+  async findSetId(setId: string): Promise<Medication> {
     const mappings = await this.rxNormMappingRepository.find({
       where: {
-        setid: id,
+        setid: setId,
       },
       relations: ['medication'],
     });
@@ -45,7 +51,7 @@ export class MedicationsService {
       return medication;
     }
 
-    const url = `https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/${id}.xml`;
+    const url = `https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/${setId}.xml`;
 
     const chunk = await new Promise((resolve, reject) => {
       https
@@ -90,32 +96,34 @@ export class MedicationsService {
 
     const ingredients: Ingredient[] = [];
 
-    for (const xmlIngredient of manufacturedProduct.ingredient) {
-      const ingredient = new Ingredient();
+    if (manufacturedProduct.ingredient) {
+      for (const xmlIngredient of manufacturedProduct.ingredient) {
+        const ingredient = new Ingredient();
 
-      if (xmlIngredient.quantity) {
-        ingredient.numeratorQuantity = parseInt(
-          xmlIngredient.quantity[0].numerator[0]['$'].value,
-        );
-        ingredient.numeratorUnit =
-          xmlIngredient.quantity[0].numerator[0]['$'].unit;
+        if (xmlIngredient.quantity) {
+          ingredient.numeratorQuantity = parseInt(
+            xmlIngredient.quantity[0].numerator[0]['$'].value,
+          );
+          ingredient.numeratorUnit =
+            xmlIngredient.quantity[0].numerator[0]['$'].unit;
 
-        ingredient.denominatorQuantity =
-          xmlIngredient.quantity[0].denominator[0]['$'].value;
-        ingredient.denominatorUnit =
-          xmlIngredient.quantity[0].denominator[0]['$'].unit;
+          ingredient.denominatorQuantity =
+            xmlIngredient.quantity[0].denominator[0]['$'].value;
+          ingredient.denominatorUnit =
+            xmlIngredient.quantity[0].denominator[0]['$'].unit;
+        }
+
+        ingredient.name = xmlIngredient.ingredientSubstance[0].name[0];
+
+        ingredients.push(ingredient);
       }
-
-      ingredient.ingredient = xmlIngredient.ingredientSubstance[0].name[0];
-
-      ingredients.push(ingredient);
     }
 
     medication.ingredients = ingredients;
 
     const rxNormMappings = await this.rxNormMappingRepository.find({
       where: {
-        setid: id,
+        setid: setId,
       },
     });
 
@@ -124,7 +132,7 @@ export class MedicationsService {
     return await this.medicationRepository.save(medication);
   }
 
-  async removeMedication(id: string): Promise<void> {
+  async removeMedication(id: number): Promise<void> {
     this.medicationRepository.delete(id);
   }
 }
