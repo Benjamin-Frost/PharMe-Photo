@@ -26,13 +26,13 @@ describe('MedicationsController', () => {
   it('should return medication data', () => {
     // as Dailymed might change the entry, you might have to change the test later
     return request(app.getHttpServer())
-      .get('/medications/b9ff2469-22c7-fc70-e053-2a95a90abc49')
+      .get('/medications?set_id=b9ff2469-22c7-fc70-e053-2a95a90abc49')
       .expect(200);
   });
 
   it('should return a 404 error', () => {
     // as Dailymed might change the entry, you might have to change the test later
-    return request(app.getHttpServer()).get('/medications/1').expect(404);
+    return request(app.getHttpServer()).get('/medications/10').expect(404);
   });
 
   afterAll(async () => {
