@@ -1,8 +1,15 @@
-import '../styles/globals.css'
-import type { AppProps } from 'next/app'
+import '../styles/globals.css';
+import type { AppProps } from 'next/app';
 
-function GuidelineTool({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+import { NavBar } from '../components/NavBar';
+
+function GuidelineTool({ Component, pageProps }: AppProps): JSX.Element {
+    return (
+        <>
+            <NavBar />
+            <Component {...pageProps} />
+        </>
+    );
 }
 
-export default GuidelineTool
+export default GuidelineTool;
