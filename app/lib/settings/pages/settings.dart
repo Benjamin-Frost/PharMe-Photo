@@ -18,6 +18,18 @@ class SettingsPage extends StatelessWidget {
           ),
         ),
       ),
+      IconButton(
+        icon: Icon(Icons.ac_unit_sharp),
+        onPressed: () => {
+          showBottomSheet(
+            context: context,
+            backgroundColor: Colors.transparent,
+            builder: (BuildContext modalContext) {
+              return MultipleChoiceWidget();
+            },
+          )
+        },
+      ),
     ]);
   }
 
@@ -41,6 +53,50 @@ class SettingsPage extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class MultipleChoiceWidget extends StatefulWidget {
+  const MultipleChoiceWidget({Key? key}) : super(key: key);
+
+  @override
+  State<MultipleChoiceWidget> createState() => _MultipleChoiceWidgetState();
+}
+
+class _MultipleChoiceWidgetState extends State<MultipleChoiceWidget> {
+  int? answer = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.all(8),
+      width: double.infinity,
+      child: Card(
+          elevation: 4,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(answer.toString()),
+              ListView.builder(
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    return RadioListTile(
+                      title: Text(index.toString()),
+                      value: index,
+                      groupValue: answer,
+                      onChanged: (int? value) {
+                        setState(() {
+                          answer = value;
+                        });
+                      },
+                    );
+                  },
+                  itemCount: 4),
+            ],
+          )),
     );
   }
 }
