@@ -1,13 +1,11 @@
-import { Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, ManyToOne } from 'typeorm';
 
+import { BaseEntity } from '../../common/entities/base.entity';
 import { GeneSymbol } from './gene-symbol.entity';
 import { Phenotype } from './phenotype.entity';
 
 @Entity()
-export class GenePhenotype {
-    @PrimaryGeneratedColumn()
-    id: number;
-
+export class GenePhenotype extends BaseEntity {
     // onDelete: 'CASCADE': delete Many when One is deleted
     @ManyToOne(() => GeneSymbol, (geneSymbol) => geneSymbol.genePhenotypes, {
         onDelete: 'CASCADE',
