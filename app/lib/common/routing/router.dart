@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
+import '../../camera/module.dart';
 import '../../faq/module.dart';
 import '../../login/module.dart';
 import '../../onboarding/module.dart';
@@ -20,6 +21,7 @@ part 'router.gr.dart';
       path: 'main',
       page: MainPage,
       children: [
+        cameraRoutes,
         searchRoutes,
         settingsRoutes,
         faqRoutes,

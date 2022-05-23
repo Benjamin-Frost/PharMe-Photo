@@ -14,6 +14,7 @@ class MainPage extends StatelessWidget {
         // The order maps to BottomNavigationBar
         SearchRouter(),
         ReportsRouter(),
+        CameraRouter(),
         FaqRouter(),
         SettingsRouter(),
       ],
@@ -43,6 +44,10 @@ class MainPage extends StatelessWidget {
       BottomNavigationBarItem(
         icon: Icon(Icons.assessment),
         label: context.l10n.nav_reports,
+      ),
+      BottomNavigationBarItem(
+        icon: Icon(Icons.camera),
+        label: context.l10n.nav_camera,
       ),
       BottomNavigationBarItem(
         icon: Icon(Icons.lightbulb),
