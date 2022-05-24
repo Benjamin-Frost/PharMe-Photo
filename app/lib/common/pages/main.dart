@@ -13,7 +13,7 @@ class MainPage extends StatelessWidget {
       routes: const [
         // The order maps to BottomNavigationBar
         SearchRouter(),
-        ReportsRouter(),
+        // ReportsRouter(),
         CameraRouter(),
         FaqRouter(),
         SettingsRouter(),
@@ -41,13 +41,13 @@ class MainPage extends StatelessWidget {
         icon: Icon(Icons.search),
         label: context.l10n.nav_search,
       ),
+      // BottomNavigationBarItem(
+      //   icon: Icon(Icons.assessment),
+      //   label: context.l10n.nav_reports,
+      // ),
       BottomNavigationBarItem(
         icon: Icon(Icons.assessment),
         label: context.l10n.nav_reports,
-      ),
-      BottomNavigationBarItem(
-        icon: Icon(Icons.camera),
-        label: context.l10n.nav_camera,
       ),
       BottomNavigationBarItem(
         icon: Icon(Icons.lightbulb),

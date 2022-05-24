@@ -61,8 +61,6 @@ class _CameraPreviewWrapperState extends State<CameraPreviewWrapper> {
     if (!controller.value.isInitialized) {
       return Center(child: CircularProgressIndicator());
     }
-    return MaterialApp(
-      home: CameraPreview(controller),
-    );
+    return CameraPreview(controller);
   }
 }
